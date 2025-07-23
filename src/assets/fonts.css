@@ -1,0 +1,103 @@
+/* Tajawal Font Family for Arabic Text */
+@font-face {
+  font-family: "Tajawal";
+  src: url("./Fonts/Tajawal/Tajawal-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Tajawal";
+  src: url("./Fonts/Tajawal/Tajawal-Medium.ttf") format("truetype");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Tajawal";
+  src: url("./Fonts/Tajawal/Tajawal-Bold.ttf") format("truetype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Tajawal";
+  src: url("./Fonts/Tajawal/Tajawal-ExtraBold.ttf") format("truetype");
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Tajawal";
+  src: url("./Fonts/Tajawal/Tajawal-Light.ttf") format("truetype");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Tajawal";
+  src: url("./Fonts/Tajawal/Tajawal-ExtraLight.ttf") format("truetype");
+  font-weight: 200;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Tajawal";
+  src: url("./Fonts/Tajawal/Tajawal-Black.ttf") format("truetype");
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Apply Tajawal font for Arabic text */
+[dir="rtl"] * {
+  font-family: "Tajawal", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif !important;
+}
+
+/* Specific font classes for Arabic text */
+.arabic-font {
+  font-family: "Tajawal", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif !important;
+}
+
+/* Ensure proper font rendering for Arabic */
+[dir="rtl"] body,
+[dir="rtl"] html {
+  font-family: "Tajawal", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif !important;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Apply Tajawal to specific Material-UI components when in RTL */
+[dir="rtl"] .MuiTypography-root,
+[dir="rtl"] .MuiButton-root,
+[dir="rtl"] .MuiCardContent-root,
+[dir="rtl"] .MuiChip-root,
+[dir="rtl"] .MuiTextField-root,
+[dir="rtl"] .MuiFormLabel-root,
+[dir="rtl"] .MuiInputBase-root,
+[dir="rtl"] .MuiMenuItem-root,
+[dir="rtl"] .MuiListItemText-root,
+[dir="rtl"] .MuiTab-root,
+[dir="rtl"] .MuiAppBar-root,
+[dir="rtl"] .MuiToolbar-root {
+  font-family: "Tajawal", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif !important;
+}
+
+/* Ensure proper line height for Arabic text */
+[dir="rtl"] {
+  line-height: 1.6;
+}
+
+/* Optimize font rendering for Arabic characters */
+[dir="rtl"] * {
+  text-rendering: optimizeLegibility;
+  -webkit-font-feature-settings: "liga", "kern";
+  -moz-font-feature-settings: "liga", "kern";
+  font-feature-settings: "liga", "kern";
+}
