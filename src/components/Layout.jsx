@@ -33,6 +33,7 @@ import {
   AccountCircle as AccountCircleIcon,
 } from "@mui/icons-material";
 import LanguageToggle from "./LanguageToggle";
+import { useLogout } from "../hooks/useAuth";
 
 const drawerWidth = 280;
 
@@ -84,8 +85,10 @@ const Layout = ({ children }) => {
   const handleProfileMenuClose = () => {
     setAnchorEl(null);
   };
+  const { logout } = useLogout();
+
   const handleLogout = () => {
-    localStorage.removeItem("isLoggedIn");
+    logout();
     handleProfileMenuClose();
     navigate("/login");
   };

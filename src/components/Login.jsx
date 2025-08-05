@@ -1,22 +1,70 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Box, Button, TextField, Typography, Paper } from "@mui/material";
+import {
+  Box,
+  Button,
+  TextField,
+  Typography,
+  Paper,
+  CircularProgress,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  Alert,
+} from "@mui/material";
+import { CheckCircle, Error } from "@mui/icons-material";
+import { useLogin } from "../hooks/useAuth";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [showErrorModal, setShowErrorModal] = useState(false);
+  const [successMessage, setSuccessMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
 
-  const handleLogin = (e) => {
+  // TanStack Query login mutation
+  const loginMutation = useLogin();
+
+  const handleLogin = async (e) => {
     e.preventDefault();
-    // Simple validation (replace with real auth in production)
-    if (email === "admin@example.com" && password === "admin123") {
-      localStorage.setItem("isLoggedIn", "true");
-      navigate("/");
-    } else {
-      setError("Invalid email or password");
-    }
+    setError("");
+
+    loginMutation.mutate(
+      {
+        email: email,
+        password: password,
+      },
+      {
+        onSuccess: (result) => {
+          // If login successful, show success modal then redirect
+          if (result.success) {
+            setSuccessMessage("Login successful! Redirecting to dashboard...");
+            setShowSuccessModal(true);
+
+            // Redirect after 2 seconds
+            setTimeout(() => {
+              setShowSuccessModal(false);
+              navigate("/");
+            }, 2000);
+          }
+        },
+        onError: (error) => {
+          setErrorMessage(
+            error.message || "Login failed. Please check your credentials."
+          );
+          setShowErrorModal(true);
+        },
+      }
+    );
+  };
+
+  const handleCloseErrorModal = () => {
+    setShowErrorModal(false);
+    setErrorMessage("");
   };
 
   return (
@@ -78,11 +126,60 @@ const Login = () => {
             color="primary"
             fullWidth
             sx={{ mt: 2 }}
+            disabled={loginMutation.isPending}
           >
-            Login
+            {loginMutation.isPending ? (
+              <CircularProgress size={24} color="inherit" />
+            ) : (
+              "Login"
+            )}
           </Button>
         </form>
       </Paper>
+
+      {/* Success Modal */}
+      <Dialog
+        open={showSuccessModal}
+        onClose={() => setShowSuccessModal(false)}
+        maxWidth="sm"
+        fullWidth
+      >
+        <DialogTitle sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+          <CheckCircle color="success" />
+          Login Successful
+        </DialogTitle>
+        <DialogContent>
+          <Alert severity="success" sx={{ mb: 2 }}>
+            {successMessage}
+          </Alert>
+        </DialogContent>
+      </Dialog>
+
+      {/* Error Modal */}
+      <Dialog
+        open={showErrorModal}
+        onClose={handleCloseErrorModal}
+        maxWidth="sm"
+        fullWidth
+      >
+        <DialogTitle sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+          <Error color="error" />
+          Login Failed
+        </DialogTitle>
+        <DialogContent>
+          <Alert severity="error" sx={{ mb: 2 }}>
+            {errorMessage}
+          </Alert>
+          <Typography variant="body2" color="text.secondary">
+            Please check your credentials and try again.
+          </Typography>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseErrorModal} color="primary">
+            Try Again
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Box>
   );
 };

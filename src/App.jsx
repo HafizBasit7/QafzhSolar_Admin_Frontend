@@ -17,6 +17,7 @@ import ManageShops from "./components/ManageShops";
 import ManageAds from "./components/ManageAds";
 import CalculatorSettings from "./components/CalculatorSettings";
 import Login from "./components/Login";
+import { useAuthStatus } from "./hooks/useAuth";
 
 // Create theme with Tajawal font support
 const createAppTheme = (direction) => {
@@ -172,8 +173,19 @@ const createAppTheme = (direction) => {
 };
 
 const PrivateRoute = ({ children }) => {
-  const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
-  return isLoggedIn ? children : <Navigate to="/login" />;
+  const { isAuthenticated } = useAuthStatus();
+
+  // If not logged in, redirect to login
+  if (!isAuthenticated) {
+    // Clear any stale data
+    localStorage.removeItem("authToken");
+    localStorage.removeItem("userId");
+    localStorage.removeItem("user");
+    localStorage.removeItem("isLoggedIn");
+    return <Navigate to="/login" replace />;
+  }
+
+  return children;
 };
 
 const AppContent = () => {
@@ -186,6 +198,7 @@ const AppContent = () => {
       <Router>
         <Routes>
           <Route path="/login" element={<Login />} />
+          <Route path="/logout" element={<Navigate to="/login" replace />} />
           <Route
             path="/*"
             element={
@@ -239,10 +252,14 @@ const AppContent = () => {
                       </PrivateRoute>
                     }
                   />
+                  {/* Catch-all route for unknown paths */}
+                  <Route path="*" element={<Navigate to="/" replace />} />
                 </Routes>
               </Layout>
             }
           />
+          {/* Catch-all route for any unknown routes */}
+          <Route path="*" element={<Navigate to="/login" replace />} />
         </Routes>
       </Router>
     </ThemeProvider>
