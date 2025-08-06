@@ -1,0 +1,15 @@
+{
+  "specializations": [
+    "Residential",
+    "Commercial",
+    "Industrial",
+    "Off-grid",
+    "On-grid",
+    "Hybrid",
+    "Solar Water Pumping",
+    "Solar Street Lighting",
+    "System Design",
+    "Maintenance",
+    "Consultation"
+  ]
+}

@@ -2,13 +2,10 @@ import AxiosInstance from "../../../utils/AxiosInstance/axiosInstance";
 
 export const HandleSignIn = async (credentials) => {
   try {
-    const response = await AxiosInstance.post(
-      "/api/serviceProviderUser/login",
-      {
-        email: credentials.email,
-        password: credentials.password,
-      }
-    );
+    const response = await AxiosInstance.post("/api/v1/admin-auth/login", {
+      email: credentials.email,
+      password: credentials.password,
+    });
 
     // Check if we have a valid response
     if (!response.data) {
@@ -16,10 +13,14 @@ export const HandleSignIn = async (credentials) => {
     }
 
     // Store token in localStorage if provided
-    if (response.data.accessToken) {
-      localStorage.setItem("authToken", response.data.accessToken);
-      localStorage.setItem("userId", response.data.userId);
-      localStorage.setItem("user", JSON.stringify(response.data));
+    if (response.data.token) {
+      localStorage.setItem("authToken", response.data.token);
+      localStorage.setItem("userId", response.data.data.user._id);
+      localStorage.setItem("user", JSON.stringify(response.data.data.user));
+      localStorage.setItem(
+        "userPermissions",
+        JSON.stringify(response.data.data.user.permissions)
+      );
       localStorage.setItem("isLoggedIn", "true");
     }
 

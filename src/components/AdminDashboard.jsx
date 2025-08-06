@@ -10,6 +10,8 @@ import {
   Container,
   Chip,
   Paper,
+  CircularProgress,
+  Alert,
 } from "@mui/material";
 import {
   Inventory as InventoryIcon,
@@ -19,15 +21,17 @@ import {
   TrendingUp as TrendingUpIcon,
   TrendingDown as TrendingDownIcon,
 } from "@mui/icons-material";
+import { useDashboardCounts } from "../hooks/useDashboard";
 
 const AdminDashboard = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
+  const { data: countsData, isLoading, error } = useDashboardCounts();
 
   const statsCards = [
     {
       title: t("dashboard.stats.pendingApprovals"),
-      value: "12",
+      value: countsData?.data?.pendingApprovals || "0",
       change: "+2",
       changeType: "increase",
       color: "#e65100", // Darker orange
@@ -36,7 +40,7 @@ const AdminDashboard = () => {
     },
     {
       title: t("dashboard.stats.totalEngineers"),
-      value: "45",
+      value: countsData?.data?.totalEngineers || "0",
       change: "+5",
       changeType: "increase",
       color: "#0d5bb8", // Darker blue
@@ -45,7 +49,7 @@ const AdminDashboard = () => {
     },
     {
       title: t("dashboard.stats.verifiedShops"),
-      value: "23",
+      value: countsData?.data?.verifiedShops || "0",
       change: "+3",
       changeType: "increase",
       color: "#00cc00", // Darker green
@@ -54,7 +58,7 @@ const AdminDashboard = () => {
     },
     {
       title: t("dashboard.stats.activeAds"),
-      value: "8",
+      value: countsData?.data?.activeAds || "0",
       change: "-1",
       changeType: "decrease",
       color: "#7b1fa2", // Darker purple
@@ -97,6 +101,35 @@ const AdminDashboard = () => {
   const handleNavigation = (path) => {
     navigate(path);
   };
+
+  // Show loading state
+  if (isLoading) {
+    return (
+      <Container maxWidth="xl" sx={{ py: 4 }}>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            minHeight: "400px",
+          }}
+        >
+          <CircularProgress size={60} />
+        </Box>
+      </Container>
+    );
+  }
+
+  // Show error state
+  if (error) {
+    return (
+      <Container maxWidth="xl" sx={{ py: 4 }}>
+        <Alert severity="error" sx={{ mb: 3 }}>
+          {error.message || "Failed to load dashboard data"}
+        </Alert>
+      </Container>
+    );
+  }
 
   return (
     <Container maxWidth="xl" sx={{ py: 4 }}>
