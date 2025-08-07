@@ -52,6 +52,11 @@ import {
   CloudUpload as UploadIcon,
 } from "@mui/icons-material";
 import { uploadImage } from "../../utils/Upload/Upload";
+import locationsData from "../data/locations.json";
+import servicesData from "../data/services.json";
+import productCategoriesData from "../data/productCategories.json";
+import brandsData from "../data/brands.json";
+import workingDaysData from "../data/workingDays.json";
 
 const ManageShops = () => {
   const { t, i18n } = useTranslation();
@@ -85,7 +90,6 @@ const ManageShops = () => {
     email: "",
     website: "",
     governorate: "",
-    city: "",
     address: "",
     description: "",
     location: {
@@ -100,7 +104,7 @@ const ManageShops = () => {
     workingHours: {
       openTime: "09:00",
       closeTime: "17:00",
-      workingDays: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday"],
+      workingDays: [],
     },
     socialMedia: {
       facebook: "",
@@ -127,7 +131,6 @@ const ManageShops = () => {
         email: shop.email || "",
         website: shop.website || "",
         governorate: shop.governorate || "",
-        city: shop.city || "",
         address: shop.address || "",
         description: shop.description || "",
         location: shop.location || { latitude: 0, longitude: 0 },
@@ -160,7 +163,6 @@ const ManageShops = () => {
         email: "",
         website: "",
         governorate: "",
-        city: "",
         address: "",
         description: "",
         location: { latitude: 0, longitude: 0 },
@@ -172,9 +174,13 @@ const ManageShops = () => {
         workingHours: {
           openTime: "09:00",
           closeTime: "17:00",
-          workingDays: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday"],
+          workingDays: [],
         },
-        socialMedia: { facebook: "", instagram: "", twitter: "" },
+        socialMedia: {
+          facebook: "",
+          instagram: "",
+          twitter: "",
+        },
         logoUrl: "",
         images: [],
         notes: "",
@@ -194,6 +200,69 @@ const ManageShops = () => {
   };
 
   const handleSubmit = async () => {
+    // Validate required fields
+    const requiredFields = {
+      name: t("shops.name"),
+      email: t("shops.email"),
+      phone: t("shops.phone"),
+      governorate: t("shops.governorate"),
+    };
+
+    // const missingFields = [];
+    // for (const [field, label] of Object.entries(requiredFields)) {
+    //   if (!formData[field] || formData[field].toString().trim() === "") {
+    //     missingFields.push(label);
+    //   }
+    // }
+
+    // if (missingFields.length > 0) {
+    //   setModalTitle(t("shops.fillRequiredFields"));
+    //   setModalMessage(
+    //     `${t("shops.fillRequiredFieldsMessage")} ${missingFields.join(", ")}`
+    //   );
+    //   setShowErrorModal(true);
+    //   return;
+    // }
+
+    // Validate website URL format if provided
+    // if (formData.website && !isValidUrl(formData.website)) {
+    //   setModalTitle(t("shops.validationError"));
+    //   setModalMessage(t("shops.invalidWebsiteMessage"));
+    //   setShowErrorModal(true);
+    //   return;
+    // }
+
+    // Validate social media URLs if provided
+    // const socialMediaFields = ["facebook", "instagram", "twitter"];
+    // for (const field of socialMediaFields) {
+    //   if (
+    //     formData.socialMedia[field] &&
+    //     !isValidUrl(formData.socialMedia[field])
+    //   ) {
+    //     setModalTitle(t("shops.validationError"));
+    //     setModalMessage(
+    //       t(
+    //         `shops.invalid${
+    //           field.charAt(0).toUpperCase() + field.slice(1)
+    //         }Message`
+    //       )
+    //     );
+    //     setShowErrorModal(true);
+    //     return;
+    //   }
+    // }
+
+    // Validate established year
+    // if (formData.establishedYear) {
+    //   const year = parseInt(formData.establishedYear);
+    //   if (isNaN(year) || year < 1900 || year > new Date().getFullYear()) {
+    //     setModalTitle(t("shops.validationError"));
+    //     setModalMessage(t("shops.invalidYearMessage"));
+    //     setShowErrorModal(true);
+    //     return;
+    //   }
+    // }
+
     try {
       if (editingShop) {
         await updateShopMutation.mutateAsync({
@@ -265,6 +334,16 @@ const ManageShops = () => {
       month: "long",
       day: "numeric",
     });
+  };
+
+  // Helper function to validate URLs
+  const isValidUrl = (string) => {
+    try {
+      new URL(string);
+      return true;
+    } catch (_) {
+      return false;
+    }
   };
 
   if (isLoading) {
@@ -389,7 +468,7 @@ const ManageShops = () => {
                     sx={{ display: "flex", alignItems: "center", gap: 1 }}
                   >
                     <LocationIcon fontSize="small" />
-                    {shop.governorate}, {shop.city}
+                    {shop.governorate}
                   </Typography>
                   <Typography variant="caption" color="textSecondary">
                     {shop.address}
@@ -551,7 +630,7 @@ const ManageShops = () => {
                     }}
                   >
                     <LocationIcon fontSize="small" />
-                    {selectedShop.governorate}, {selectedShop.city}
+                    {selectedShop.governorate}
                   </Typography>
                   <Typography variant="body2" color="textSecondary">
                     {selectedShop.address}
@@ -696,7 +775,6 @@ const ManageShops = () => {
                 label={t("shops.name")}
                 value={formData.name}
                 onChange={(e) => handleInputChange("name", e.target.value)}
-                required
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -706,7 +784,6 @@ const ManageShops = () => {
                 type="email"
                 value={formData.email}
                 onChange={(e) => handleInputChange("email", e.target.value)}
-                required
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -746,22 +823,22 @@ const ManageShops = () => {
               />
             </Grid>
             <Grid item xs={12} sm={6}>
-              <TextField
-                fullWidth
-                label={t("shops.governorate")}
-                value={formData.governorate}
-                onChange={(e) =>
-                  handleInputChange("governorate", e.target.value)
-                }
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                fullWidth
-                label={t("shops.city")}
-                value={formData.city}
-                onChange={(e) => handleInputChange("city", e.target.value)}
-              />
+              <FormControl fullWidth>
+                <InputLabel>{t("shops.governorate")}</InputLabel>
+                <Select
+                  value={formData.governorate}
+                  label={t("shops.governorate")}
+                  onChange={(e) =>
+                    handleInputChange("governorate", e.target.value)
+                  }
+                >
+                  {locationsData.governorates.map((governorate) => (
+                    <MenuItem key={governorate} value={governorate}>
+                      {governorate}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
             </Grid>
             <Grid item xs={12} sm={6}>
               <TextField
@@ -837,44 +914,31 @@ const ManageShops = () => {
               <Typography variant="h6" gutterBottom sx={{ mt: 2 }}>
                 {t("shops.services")}
               </Typography>
-              <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1, mb: 3 }}>
-                {formData.services.map((service, index) => (
-                  <Chip
-                    key={index}
-                    label={service}
-                    onDelete={() =>
-                      setFormData((prev) => ({
-                        ...prev,
-                        services: prev.services.filter((_, i) => i !== index),
-                      }))
-                    }
-                  />
-                ))}
-                <TextField
-                  fullWidth
-                  label={t("shops.addService")}
-                  value={formData.newService || ""}
+              <FormControl fullWidth sx={{ mb: 2 }}>
+                <InputLabel>{t("shops.selectServices")}</InputLabel>
+                <Select
+                  multiple
+                  value={formData.services}
+                  label={t("shops.selectServices")}
+                  input={<OutlinedInput label={t("shops.selectServices")} />}
                   onChange={(e) =>
-                    setFormData((prev) => ({
-                      ...prev,
-                      newService: e.target.value,
-                    }))
+                    handleInputChange("services", e.target.value)
                   }
-                  onKeyPress={(e) => {
-                    if (e.key === "Enter") {
-                      e.preventDefault();
-                      if (formData.newService?.trim()) {
-                        setFormData((prev) => ({
-                          ...prev,
-                          services: [...prev.services, formData.newService],
-                          newService: "",
-                        }));
-                      }
-                    }
-                  }}
-                  sx={{ mt: 1 }}
-                />
-              </Box>
+                  renderValue={(selected) => (
+                    <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
+                      {selected.map((value) => (
+                        <Chip key={value} label={value} size="small" />
+                      ))}
+                    </Box>
+                  )}
+                >
+                  {servicesData.services.map((service) => (
+                    <MenuItem key={service} value={service}>
+                      {service}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
             </Grid>
 
             {/* Product Categories */}
@@ -882,49 +946,33 @@ const ManageShops = () => {
               <Typography variant="h6" gutterBottom sx={{ mt: 2 }}>
                 {t("shops.productCategories")}
               </Typography>
-              <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1, mb: 3 }}>
-                {formData.productCategories.map((category, index) => (
-                  <Chip
-                    key={index}
-                    label={category}
-                    onDelete={() =>
-                      setFormData((prev) => ({
-                        ...prev,
-                        productCategories: prev.productCategories.filter(
-                          (_, i) => i !== index
-                        ),
-                      }))
-                    }
-                  />
-                ))}
-                <TextField
-                  fullWidth
-                  label={t("shops.addProductCategory")}
-                  value={formData.newProductCategory || ""}
-                  onChange={(e) =>
-                    setFormData((prev) => ({
-                      ...prev,
-                      newProductCategory: e.target.value,
-                    }))
+              <FormControl fullWidth sx={{ mb: 2 }}>
+                <InputLabel>{t("shops.selectProductCategories")}</InputLabel>
+                <Select
+                  multiple
+                  value={formData.productCategories}
+                  label={t("shops.selectProductCategories")}
+                  input={
+                    <OutlinedInput label={t("shops.selectProductCategories")} />
                   }
-                  onKeyPress={(e) => {
-                    if (e.key === "Enter") {
-                      e.preventDefault();
-                      if (formData.newProductCategory?.trim()) {
-                        setFormData((prev) => ({
-                          ...prev,
-                          productCategories: [
-                            ...prev.productCategories,
-                            formData.newProductCategory,
-                          ],
-                          newProductCategory: "",
-                        }));
-                      }
-                    }
-                  }}
-                  sx={{ mt: 1 }}
-                />
-              </Box>
+                  onChange={(e) =>
+                    handleInputChange("productCategories", e.target.value)
+                  }
+                  renderValue={(selected) => (
+                    <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
+                      {selected.map((value) => (
+                        <Chip key={value} label={value} size="small" />
+                      ))}
+                    </Box>
+                  )}
+                >
+                  {productCategoriesData.categories.map((category) => (
+                    <MenuItem key={category} value={category}>
+                      {category}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
             </Grid>
 
             {/* Brands */}
@@ -932,44 +980,29 @@ const ManageShops = () => {
               <Typography variant="h6" gutterBottom sx={{ mt: 2 }}>
                 {t("shops.brands")}
               </Typography>
-              <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1, mb: 3 }}>
-                {formData.brands.map((brand, index) => (
-                  <Chip
-                    key={index}
-                    label={brand}
-                    onDelete={() =>
-                      setFormData((prev) => ({
-                        ...prev,
-                        brands: prev.brands.filter((_, i) => i !== index),
-                      }))
-                    }
-                  />
-                ))}
-                <TextField
-                  fullWidth
-                  label={t("shops.addBrand")}
-                  value={formData.newBrand || ""}
-                  onChange={(e) =>
-                    setFormData((prev) => ({
-                      ...prev,
-                      newBrand: e.target.value,
-                    }))
-                  }
-                  onKeyPress={(e) => {
-                    if (e.key === "Enter") {
-                      e.preventDefault();
-                      if (formData.newBrand?.trim()) {
-                        setFormData((prev) => ({
-                          ...prev,
-                          brands: [...prev.brands, formData.newBrand],
-                          newBrand: "",
-                        }));
-                      }
-                    }
-                  }}
-                  sx={{ mt: 1 }}
-                />
-              </Box>
+              <FormControl fullWidth sx={{ mb: 2 }}>
+                <InputLabel>{t("shops.selectBrands")}</InputLabel>
+                <Select
+                  multiple
+                  value={formData.brands}
+                  label={t("shops.selectBrands")}
+                  input={<OutlinedInput label={t("shops.selectBrands")} />}
+                  onChange={(e) => handleInputChange("brands", e.target.value)}
+                  renderValue={(selected) => (
+                    <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
+                      {selected.map((value) => (
+                        <Chip key={value} label={value} size="small" />
+                      ))}
+                    </Box>
+                  )}
+                >
+                  {brandsData.brands.map((brand) => (
+                    <MenuItem key={brand} value={brand}>
+                      {brand}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
             </Grid>
 
             {/* Working Hours */}
@@ -1007,6 +1040,36 @@ const ManageShops = () => {
                 }
                 InputLabelProps={{ shrink: true }}
               />
+            </Grid>
+            <Grid item xs={12}>
+              <FormControl fullWidth sx={{ mb: 2 }}>
+                <InputLabel>{t("shops.selectWorkingDays")}</InputLabel>
+                <Select
+                  multiple
+                  value={formData.workingHours.workingDays}
+                  label={t("shops.selectWorkingDays")}
+                  input={<OutlinedInput label={t("shops.selectWorkingDays")} />}
+                  onChange={(e) =>
+                    handleInputChange("workingHours", {
+                      ...formData.workingHours,
+                      workingDays: e.target.value,
+                    })
+                  }
+                  renderValue={(selected) => (
+                    <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
+                      {selected.map((value) => (
+                        <Chip key={value} label={value} size="small" />
+                      ))}
+                    </Box>
+                  )}
+                >
+                  {workingDaysData.days.map((day) => (
+                    <MenuItem key={day} value={day}>
+                      {day}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
             </Grid>
 
             {/* Social Media */}

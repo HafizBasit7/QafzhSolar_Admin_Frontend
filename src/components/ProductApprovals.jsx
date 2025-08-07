@@ -202,8 +202,66 @@ const ProductApprovals = () => {
         {t("products.subtitle")}
       </Typography>
 
-      <Grid container spacing={3}>
-        {paginatedProducts.map((product) => (
+      {/* No Products Message */}
+      {pendingProducts.length === 0 && (
+        <Card
+          elevation={0}
+          sx={{
+            background: "linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%)",
+            borderRadius: 4,
+            border: "2px dashed #dee2e6",
+            p: 6,
+            textAlign: "center",
+            maxWidth: 600,
+            mx: "auto",
+            mt: 4,
+          }}
+        >
+          <Typography
+            variant="h1"
+            sx={{
+              fontSize: "4rem",
+              mb: 2,
+              opacity: 0.7,
+            }}
+          >
+            {t("products.noProducts.icon")}
+          </Typography>
+          <Typography
+            variant="h4"
+            fontWeight="bold"
+            color="text.primary"
+            gutterBottom
+            sx={{ mb: 2 }}
+          >
+            {t("products.noProducts.title")}
+          </Typography>
+          <Typography
+            variant="h6"
+            color="text.secondary"
+            sx={{ mb: 3, fontWeight: 400 }}
+          >
+            {t("products.noProducts.subtitle")}
+          </Typography>
+          <Typography
+            variant="body1"
+            color="text.secondary"
+            sx={{
+              maxWidth: 500,
+              mx: "auto",
+              lineHeight: 1.6,
+              opacity: 0.8,
+            }}
+          >
+            {t("products.noProducts.description")}
+          </Typography>
+        </Card>
+      )}
+
+      {/* Products Grid */}
+      {pendingProducts.length > 0 && (
+        <Grid container spacing={3}>
+          {paginatedProducts.map((product) => (
           <Grid item xs={12} md={6} lg={4} key={product._id}>
             <Card
               sx={{
@@ -344,8 +402,9 @@ const ProductApprovals = () => {
           </Grid>
         ))}
       </Grid>
+      )}
 
-      {totalPages > 1 && (
+      {pendingProducts.length > 0 && totalPages > 1 && (
         <Box sx={{ display: "flex", justifyContent: "center", mt: 4 }}>
           <Pagination
             count={totalPages}
