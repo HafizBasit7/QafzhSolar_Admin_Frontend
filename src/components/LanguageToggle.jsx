@@ -21,9 +21,9 @@ const LanguageToggle = () => {
 
   return (
     <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-      <Typography variant="body2" color="inherit" sx={{ opacity: 0.8 }}>
+      {/* <Typography variant="body2" color="inherit" sx={{ opacity: 0.8 }}>
         {t("common.language")}:
-      </Typography>
+      </Typography> */}
       <ToggleButtonGroup
         value={currentLanguage}
         exclusive

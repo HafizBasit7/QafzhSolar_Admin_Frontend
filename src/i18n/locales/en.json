@@ -219,6 +219,7 @@
     "manageAdsDesc": "You'll be able to manage advertisements here"
   },
   "shops": {
+   
     "title": "Manage Shops",
     "subtitle": "Add, edit, and manage solar shops in the system",
     "addShop": "Add Shop",
@@ -309,7 +310,8 @@
       "verified": "Verified",
       "pending": "Pending",
       "rejected": "Rejected"
-    }
+    },
+    "label":"Status"
   },
   "ads": {
     "title": "Manage Advertisements",

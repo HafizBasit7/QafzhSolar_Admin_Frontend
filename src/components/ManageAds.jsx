@@ -364,7 +364,8 @@ const ManageAds = () => {
         }}
       >
         <TableContainer>
-          <Table sx={{ minWidth: 650 }}>
+         
+          <Table stickyHeader sx={{ minWidth: 650 }}>
             <TableHead>
               <TableRow
                 sx={{
@@ -435,22 +436,25 @@ const ManageAds = () => {
                 </TableCell>
               </TableRow>
             </TableHead>
+
             <TableBody>
-              {ads.map((ad, index) => (
-                <TableRow
-                  key={ad._id}
-                  sx={{
-                    "&:hover": {
-                      backgroundColor: "rgba(0, 0, 0, 0.04)",
-                      transform: "scale(1.001)",
-                      boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
-                    },
-                    transition: "all 0.2s ease",
-                    "&:nth-of-type(even)": {
-                      backgroundColor: "rgba(0, 0, 0, 0.02)",
-                    },
-                  }}
-                >
+           {ads.map((ad) => (
+        <TableRow
+          key={ad._id}
+          sx={{
+            // do NOT change layout on hover (no transform/scale/translate)
+            "&:hover": {
+              backgroundColor: "rgba(0, 0, 0, 0.04)",
+              boxShadow: "0 2px 8px rgba(0,0,0,0.06)",
+            },
+            // only animate background + box-shadow to avoid reflow
+            transition: "background-color 0.2s ease, box-shadow 0.2s ease",
+            willChange: "background-color, box-shadow",
+            "&:nth-of-type(even)": {
+              backgroundColor: "rgba(0, 0, 0, 0.02)",
+            },
+          }}
+        >
                   <TableCell sx={{ py: 2.5 }}>
                     <Box
                       sx={{ display: "flex", alignItems: "center", gap: 2.5 }}

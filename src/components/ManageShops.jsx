@@ -90,6 +90,7 @@ const ManageShops = () => {
     email: "",
     website: "",
     governorate: "",
+    city:"",
     address: "",
     description: "",
     location: {
@@ -131,6 +132,7 @@ const ManageShops = () => {
         email: shop.email || "",
         website: shop.website || "",
         governorate: shop.governorate || "",
+        city:shop.city || "",
         address: shop.address || "",
         description: shop.description || "",
         location: shop.location || { latitude: 0, longitude: 0 },
@@ -163,6 +165,7 @@ const ManageShops = () => {
         email: "",
         website: "",
         governorate: "",
+        city:"",
         address: "",
         description: "",
         location: { latitude: 0, longitude: 0 },
@@ -421,7 +424,7 @@ const ManageShops = () => {
               <TableCell>{t("shops.contact")}</TableCell>
               <TableCell>{t("shops.location")}</TableCell>
               <TableCell>{t("shops.services")}</TableCell>
-              <TableCell>{t("shops.status")}</TableCell>
+              <TableCell>{t("shops.label")}</TableCell>
               <TableCell>{t("shops.actions")}</TableCell>
             </TableRow>
           </TableHead>
@@ -437,9 +440,9 @@ const ManageShops = () => {
                       <Typography variant="subtitle2" fontWeight="bold">
                         {shop.name}
                       </Typography>
-                      <Typography variant="caption" color="textSecondary">
+                      {/* <Typography variant="caption" color="textSecondary">
                         {shop.description}
-                      </Typography>
+                      </Typography> */}
                     </Box>
                   </Box>
                 </TableCell>
@@ -841,6 +844,14 @@ const ManageShops = () => {
               </FormControl>
             </Grid>
             <Grid item xs={12} sm={6}>
+  <TextField
+    fullWidth
+    label={t("shops.city")}
+    value={formData.city}
+    onChange={(e) => handleInputChange("city", e.target.value)}
+  />
+</Grid>
+            <Grid item xs={12} sm={6}>
               <TextField
                 fullWidth
                 label={t("shops.establishedYear")}
@@ -875,7 +886,7 @@ const ManageShops = () => {
             </Grid>
 
             {/* Location */}
-            <Grid item xs={12}>
+            {/* <Grid item xs={12}>
               <Typography variant="h6" gutterBottom sx={{ mt: 2 }}>
                 {t("shops.location")}
               </Typography>
@@ -907,7 +918,7 @@ const ManageShops = () => {
                   })
                 }
               />
-            </Grid>
+            </Grid> */}
 
             {/* Services */}
             <Grid item xs={12}>

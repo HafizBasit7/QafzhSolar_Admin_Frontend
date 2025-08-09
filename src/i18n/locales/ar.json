@@ -227,6 +227,7 @@
     "manageAdsDesc": "ستتمكن من إدارة الإعلانات هنا"
   },
   "shops": {
+    "label":"الحالة",
     "title": "إدارة المتاجر",
     "subtitle": "إضافة وتعديل وإدارة متاجر الطاقة الشمسية في النظام",
     "addShop": "إضافة متجر",
@@ -317,7 +318,11 @@
       "verified": "موثق",
       "pending": "معلق",
       "rejected": "مرفوض"
-    }
+    },
+    "shops.selectBrands":"اختر العلامات التجارية",
+    "shops.selectWorkingDays":"اختر أيام العمل",
+    "shops.selectServices":"اختر الخدمات",
+    "shops.selectProductCategories":"اختر فئات المنتجات"
   },
   "ads": {
     "title": "إدارة الإعلانات",

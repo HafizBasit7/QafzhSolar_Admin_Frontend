@@ -98,7 +98,7 @@ const Layout = ({ children }) => {
       <Box
         sx={{
           p: 3,
-          background: "#04fe03",
+          background: "#1877f2",
           color: "white",
           textAlign: "center",
         }}
@@ -141,10 +141,10 @@ const Layout = ({ children }) => {
                   color: "#00cc00",
                 },
                 "&.Mui-selected": {
-                  backgroundColor: "#04fe03",
+                  backgroundColor: "#1877f2",
                   color: "#fff",
                   "&:hover": {
-                    backgroundColor: "#04fe03",
+                    backgroundColor: "#1877f2",
                   },
                 },
               }}
@@ -185,7 +185,7 @@ const Layout = ({ children }) => {
                 left: { sm: `${drawerWidth}px` },
                 right: 0,
               }),
-          background: "#04fe03",
+          background: "#1877f2",
           boxShadow: "0 2px 10px rgba(0, 0, 0, 0.1)",
         }}
         elevation={0}
@@ -203,12 +203,12 @@ const Layout = ({ children }) => {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" noWrap component="div" sx={{ flexGrow: 1 }}>
+          <Typography variant="h6" noWrap component="div" sx={{ flexGrow: 1, color:"white" }}>
             {t("dashboard.title")}
           </Typography>
           <Stack direction="row" spacing={2} alignItems="center">
             <LanguageToggle />
-            <Tooltip title={t("common.profile")} arrow>
+            <Tooltip title={t("common.profile")} arrow sx={{color:"white" }}>
               <IconButton color="inherit" onClick={handleProfileMenuOpen}>
                 <AccountCircleIcon />
               </IconButton>
