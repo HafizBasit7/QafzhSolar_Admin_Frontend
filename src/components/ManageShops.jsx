@@ -90,7 +90,7 @@ const ManageShops = () => {
     email: "",
     website: "",
     governorate: "",
-    city:"",
+    city: "",
     address: "",
     description: "",
     location: {
@@ -132,7 +132,7 @@ const ManageShops = () => {
         email: shop.email || "",
         website: shop.website || "",
         governorate: shop.governorate || "",
-        city:shop.city || "",
+        city: shop.city || "",
         address: shop.address || "",
         description: shop.description || "",
         location: shop.location || { latitude: 0, longitude: 0 },
@@ -165,7 +165,7 @@ const ManageShops = () => {
         email: "",
         website: "",
         governorate: "",
-        city:"",
+        city: "",
         address: "",
         description: "",
         location: { latitude: 0, longitude: 0 },
@@ -377,38 +377,77 @@ const ManageShops = () => {
   }
 
   return (
+
     <Container maxWidth="xl" sx={{ py: 4 }}>
-      <Box
+      {/* Professional Header Section */}
+      <Card
+        elevation={0}
         sx={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
+          background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+          color: "white",
           mb: 4,
+          borderRadius: 3,
         }}
       >
-        <Box>
-          <Typography variant="h4" fontWeight="bold" gutterBottom>
-            {t("shops.title")}
-          </Typography>
-          <Typography variant="body1" color="textSecondary">
-            {t("shops.subtitle")}
-          </Typography>
-        </Box>
-        <Button
-          variant="contained"
-          startIcon={!isRTL ? <AddIcon /> : null}
-          endIcon={isRTL ? <AddIcon /> : null}
-          sx={{
-            background: "linear-gradient(135deg, #4caf50 0%, #45a049 100%)",
-            "&:hover": {
-              background: "linear-gradient(135deg, #45a049 0%, #3d8b40 100%)",
-            },
-          }}
-          onClick={() => handleOpenDialog()}
-        >
-          {t("shops.addShop")}
-        </Button>
-      </Box>
+        <CardContent sx={{ py: 2 }}>
+          <Box
+            sx={{
+
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              mb: 4,
+            }}
+          >
+            <Box>
+              <Typography
+                variant="h3"
+                fontWeight="700"
+                gutterBottom
+                sx={{
+                  background: "linear-gradient(45deg, #fff 30%, #e3f2fd 90%)",
+                  backgroundClip: "text",
+                  WebkitBackgroundClip: "text",
+                  WebkitTextFillColor: "transparent",
+                }}
+              >
+                {t("shops.title")}
+              </Typography>
+              <Typography
+                variant="h6"
+                sx={{ opacity: 0.9, fontWeight: 300, maxWidth: 600 }}
+              >
+                {t("shops.subtitle")}
+              </Typography>
+            </Box>
+            <Button
+              variant="contained"
+              startIcon={!isRTL ? <AddIcon /> : null}
+              endIcon={isRTL ? <AddIcon /> : null}
+              sx={{
+                background: "rgba(255, 255, 255, 0.2)",
+                backdropFilter: "blur(10px)",
+                color: "white",
+                border: "1px solid rgba(255, 255, 255, 0.3)",
+                borderRadius: 2,
+                px: 3,
+                py: 1.5,
+                fontSize: "1.1rem",
+                fontWeight: 600,
+                "&:hover": {
+                  background: "rgba(255, 255, 255, 0.3)",
+                  transform: "translateY(-2px)",
+                  boxShadow: "0 8px 25px rgba(0,0,0,0.15)",
+                },
+                transition: "all 0.3s ease",
+              }}
+              onClick={() => handleOpenDialog()}
+            >
+              {t("shops.addShop")}
+            </Button>
+          </Box>
+        </CardContent>
+      </Card>
 
       <TableContainer
         component={Paper}
@@ -844,13 +883,13 @@ const ManageShops = () => {
               </FormControl>
             </Grid>
             <Grid item xs={12} sm={6}>
-  <TextField
-    fullWidth
-    label={t("shops.city")}
-    value={formData.city}
-    onChange={(e) => handleInputChange("city", e.target.value)}
-  />
-</Grid>
+              <TextField
+                fullWidth
+                label={t("shops.city")}
+                value={formData.city}
+                onChange={(e) => handleInputChange("city", e.target.value)}
+              />
+            </Grid>
             <Grid item xs={12} sm={6}>
               <TextField
                 fullWidth

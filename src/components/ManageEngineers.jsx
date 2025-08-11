@@ -370,6 +370,16 @@ const ManageEngineers = () => {
   return (
     <Container maxWidth="xl" sx={{ py: 4 }}>
       {/* Header */}
+      <Card
+        elevation={0}
+        sx={{
+          background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+          color: "white",
+          mb: 4,
+          borderRadius: 3,
+        }}
+      >
+        <CardContent sx={{ py: 4 }}>
       <Box
         sx={{
           mb: 4,
@@ -378,18 +388,46 @@ const ManageEngineers = () => {
           alignItems: "center",
         }}
       >
-        <Typography variant="h4" fontWeight="bold">
+        <Typography  variant="h3"
+                fontWeight="700"
+                gutterBottom
+                sx={{
+                  background: "linear-gradient(45deg, #fff 30%, #e3f2fd 90%)",
+                  backgroundClip: "text",
+                  WebkitBackgroundClip: "text",
+                  WebkitTextFillColor: "transparent",
+                }}
+              >
           {t("engineers.title")}
         </Typography>
         <Button
           variant="contained"
           startIcon={<AddIcon />}
           onClick={() => handleOpenDialog()}
-          sx={{ borderRadius: 2 }}
+          sx={{
+            background: "rgba(255, 255, 255, 0.2)",
+            backdropFilter: "blur(10px)",
+            color: "white",
+            border: "1px solid rgba(255, 255, 255, 0.3)",
+            borderRadius: 2,
+            px: 3,
+            py: 1.5,
+            fontSize: "1.1rem",
+            fontWeight: 600,
+            "&:hover": {
+              background: "rgba(255, 255, 255, 0.3)",
+              transform: "translateY(-2px)",
+              boxShadow: "0 8px 25px rgba(0,0,0,0.15)",
+            },
+            transition: "all 0.3s ease",
+          }}
+        
         >
           {t("engineers.addEngineer")}
         </Button>
       </Box>
+      </CardContent>
+      </Card>
 
       {/* Engineers Grid */}
       <Grid container spacing={3}>

@@ -2,7 +2,7 @@
   "dashboard": {
     "title": "Qahzah Admin Panel",
     "welcome": "Welcome to Qahzah Admin Panel",
-    "subtitle": "Welcome to Qahzah Solar Energy Management System",
+    "subtitle": "Manage Your All System from here !",
     "recentActivity": "Recent Activity",
     "quickActions": "Quick Actions",
     "stats": {
@@ -39,7 +39,8 @@
     "manageShops": "Manage Shops",
     "manageAds": "Manage Ads",
     "calculatorSettings": "Calculator Settings",
-    "viewSubmissions": "View Submissions"
+    "viewSubmissions": "View Submissions",
+    "bankDetails":"Add Bank Details"
   },
   "products": {
     "title": "Product Approvals",

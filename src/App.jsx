@@ -16,6 +16,7 @@ import ManageEngineers from "./components/ManageEngineers";
 import ManageShops from "./components/ManageShops";
 import ManageAds from "./components/ManageAds";
 import CalculatorSettings from "./components/CalculatorSettings";
+import BankDetailsForm from "./components/BankDetailsForm";
 import Login from "./components/Login";
 import { useAuthStatus } from "./hooks/useAuth";
 
@@ -249,6 +250,14 @@ const AppContent = () => {
                     element={
                       <PrivateRoute>
                         <CalculatorSettings />
+                      </PrivateRoute>
+                    }
+                  />
+                  <Route
+                    path="/bank-details"
+                    element={
+                      <PrivateRoute>
+                        <BankDetailsForm />
                       </PrivateRoute>
                     }
                   />

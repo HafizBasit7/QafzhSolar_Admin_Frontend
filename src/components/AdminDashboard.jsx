@@ -23,18 +23,11 @@ import {
 } from "@mui/icons-material";
 import { useDashboardCounts } from "../hooks/useDashboard";
 
-/**
- * AdminDashboard
- * - Keeps all original logic (translations, navigation, hook calls)
- * - Adds responsive & polished UI
- * - Preserves `change` and `changeType` indicators (with icons and chips)
- */
 const AdminDashboard = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
   const { data: countsData, isLoading, error } = useDashboardCounts();
 
-  // Stats (keeps change/changeType from original)
   const statsCards = [
     {
       title: t("dashboard.stats.pendingApprovals"),
@@ -74,7 +67,6 @@ const AdminDashboard = () => {
     },
   ];
 
-  // Quick actions (keeps path & descriptions)
   const quickActions = [
     {
       title: t("dashboard.actions.reviewProducts"),
@@ -110,7 +102,7 @@ const AdminDashboard = () => {
     navigate(path);
   };
 
-  // Loading state
+  // Show loading state
   if (isLoading) {
     return (
       <Container maxWidth="xl" sx={{ py: 4 }}>
@@ -128,31 +120,45 @@ const AdminDashboard = () => {
     );
   }
 
-  // Error state
+  // Show error state
   if (error) {
     return (
       <Container maxWidth="xl" sx={{ py: 4 }}>
         <Alert severity="error" sx={{ mb: 3 }}>
-          {error.message || t("dashboard.errorLoading") || "Failed to load dashboard data"}
+          {error.message || "Failed to load dashboard data"}
         </Alert>
       </Container>
     );
   }
 
   return (
-    <Container maxWidth="xl" sx={{ py: { xs: 3, md: 5 } }}>
+    <Container maxWidth="xl" sx={{ py: 4 }}>
       {/* Header Section */}
-      <Box sx={{ mb: { xs: 3, md: 6 } }}>
-        <Typography variant="h3" fontWeight="bold" gutterBottom sx={{ fontSize: { xs: "1.6rem", md: "2.125rem" } }}>
+      <Card
+        elevation={0}
+        sx={{
+          background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+          color: "white",
+          mb: 4,
+          borderRadius: 3,
+        }}
+      >
+ <CardContent sx={{ py: 4 }}>
+      <Box sx={{ mb: 6 }}>
+        <Typography variant="h3" fontWeight="bold" gutterBottom>
           {t("dashboard.welcome")}
         </Typography>
-        <Typography variant="h6" color="text.secondary" sx={{ mb: 2 }}>
+        <Typography  variant="h6"
+                sx={{ opacity: 0.9, fontWeight: 300, maxWidth: 600 }}
+              >
           {t("dashboard.subtitle")}
         </Typography>
       </Box>
+      </CardContent>
+      </Card>
 
-      {/* Stats Cards */}
-      <Grid container spacing={4} sx={{ mb: { xs: 4, md: 6 } }}>
+      {/* Stats Cards - Larger and More Professional */}
+      <Grid container spacing={4} sx={{ mb: 6 }}>
         {statsCards.map((card, index) => (
           <Grid item xs={12} sm={6} lg={3} key={index}>
             <Card
@@ -160,27 +166,40 @@ const AdminDashboard = () => {
               sx={{
                 height: "100%",
                 minHeight: 200,
-                background: "linear-gradient(135deg, rgba(255,255,255,0.96) 0%, rgba(255,255,255,0.99) 100%)",
-                backdropFilter: "blur(6px)",
-                border: `1px solid ${card.color}20`,
-                borderRadius: 3,
-                transition: "transform 0.35s cubic-bezier(0.4,0,0.2,1), box-shadow 0.35s",
+                background:
+                  "linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.98) 100%)",
+                backdropFilter: "blur(20px)",
+                border: `2px solid ${card.color}20`,
+                borderRadius: 4,
+                transition: "all 0.4s cubic-bezier(0.4, 0, 0.2, 1)",
                 "&:hover": {
                   transform: "translateY(-8px)",
-                  boxShadow: `0 18px 36px ${card.color}30`,
-                  border: `1px solid ${card.color}40`,
+                  boxShadow: `0 20px 40px ${card.color}30`,
+                  border: `2px solid ${card.color}40`,
                 },
-                display: "flex",
-                flexDirection: "column",
               }}
             >
-              <CardContent sx={{ p: { xs: 3, md: 4 }, display: "flex", flexDirection: "column", flex: 1 }}>
-                {/* Top Row: Icon and change chip */}
-                <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", mb: 2 }}>
+              <CardContent
+                sx={{
+                  p: 4,
+                  height: "100%",
+                  display: "flex",
+                  flexDirection: "column",
+                }}
+              >
+                {/* Header - No Icons or Change Indicators */}
+                <Box
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    mb: 3,
+                  }}
+                >
                   <Box
                     sx={{
-                      p: 1.25,
-                      borderRadius: 2,
+                      p: 2,
+                      borderRadius: 3,
                       backgroundColor: `${card.color}15`,
                       color: card.color,
                       display: "flex",
@@ -188,50 +207,48 @@ const AdminDashboard = () => {
                       justifyContent: "center",
                     }}
                   >
-                    {React.cloneElement(card.icon, { sx: { fontSize: 28 } })}
+                    {React.cloneElement(card.icon, { sx: { fontSize: 32 } })}
                   </Box>
-
-                  <Chip
-                    label={
-                      <Box sx={{ display: "flex", alignItems: "center", gap: 0.5 }}>
-                        {card.changeType === "increase" ? <TrendingUpIcon sx={{ fontSize: 18 }} /> : <TrendingDownIcon sx={{ fontSize: 18 }} />}
-                        <Typography variant="caption" sx={{ fontWeight: 600 }}>
-                          {card.change}
-                        </Typography>
-                      </Box>
-                    }
-                    size="small"
-                    sx={{
-                      backgroundColor: card.changeType === "increase" ? "rgba(0,200,83,0.08)" : "rgba(244,67,54,0.08)",
-                      color: card.changeType === "increase" ? "success.main" : "error.main",
-                      border: `1px solid ${card.changeType === "increase" ? "rgba(0,200,83,0.12)" : "rgba(244,67,54,0.12)"}`,
-                      fontWeight: 700,
-                    }}
-                  />
                 </Box>
 
-                {/* Value */}
+                {/* Value - Centered */}
                 <Typography
                   variant="h2"
                   component="div"
                   sx={{
                     color: card.color,
-                    fontWeight: 700,
-                    mb: 1,
-                    fontSize: { xs: "2rem", md: "2.6rem" },
-                    lineHeight: 1,
+                    fontWeight: "bold",
+                    mb: 2,
+                    fontSize: { xs: "2.5rem", md: "3rem" },
+                    textAlign: "center",
                   }}
                 >
                   {card.value}
                 </Typography>
 
-                {/* Title */}
-                <Typography variant="h6" fontWeight="700" sx={{ mb: 1 }}>
+                {/* Title - Centered */}
+                <Typography
+                  variant="h6"
+                  fontWeight="bold"
+                  sx={{
+                    mb: 1,
+                    color: "text.primary",
+                    textAlign: "center",
+                  }}
+                >
                   {card.title}
                 </Typography>
 
-                {/* Description */}
-                <Typography variant="body2" color="text.secondary" sx={{ mt: "auto" }}>
+                {/* Description - Centered */}
+                <Typography
+                  variant="body2"
+                  color="textSecondary"
+                  sx={{
+                    fontWeight: 500,
+                    lineHeight: 1.5,
+                    textAlign: "center",
+                  }}
+                >
                   {card.description}
                 </Typography>
               </CardContent>
@@ -240,69 +257,88 @@ const AdminDashboard = () => {
         ))}
       </Grid>
 
-      {/* Quick Actions */}
+      {/* Quick Actions - Larger and More Professional */}
       <Grid container spacing={4}>
         <Grid item xs={12}>
           <Paper
             elevation={3}
             sx={{
-              background: "linear-gradient(180deg, rgba(255,255,255,0.98), rgba(250,250,250,0.98))",
-              border: "1px solid rgba(0,0,0,0.06)",
-              borderRadius: 3,
-              p: { xs: 2.5, md: 4 },
+              background:
+                "linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.98) 100%)",
+              backdropFilter: "blur(20px)",
+              border: "2px solid rgba(0, 0, 0, 0.08)",
+              borderRadius: 4,
+              p: 4,
             }}
           >
-            <Typography variant="h4" fontWeight="700" gutterBottom sx={{ mb: { xs: 2.5, md: 4 } }}>
+            <Typography
+              variant="h4"
+              fontWeight="bold"
+              gutterBottom
+              sx={{ mb: 4 }}
+            >
               {t("dashboard.quickActions")}
             </Typography>
-
             <Grid container spacing={3}>
               {quickActions.map((action, index) => (
                 <Grid item xs={12} sm={6} lg={3} key={index}>
                   <Card
                     elevation={2}
-                    onClick={() => handleNavigation(action.path)}
                     sx={{
                       cursor: "pointer",
                       textAlign: "center",
-                      p: { xs: 2.5, md: 3 },
+                      p: 3,
                       height: "100%",
-                      minHeight: 160,
-                      background: "rgba(255,255,255,0.92)",
-                      border: `1px solid ${action.color}20`,
+                      minHeight: 180,
+                      background: "rgba(255, 255, 255, 0.8)",
+                      border: `2px solid ${action.color}20`,
                       borderRadius: 3,
-                      transition: "transform 0.28s, box-shadow 0.28s",
+                      transition: "all 0.4s cubic-bezier(0.4, 0, 0.2, 1)",
                       "&:hover": {
+                        backgroundColor: "rgba(255, 255, 255, 0.95)",
                         transform: "translateY(-6px) scale(1.02)",
-                        boxShadow: `0 14px 28px ${action.color}25`,
-                        border: `1px solid ${action.color}40`,
+                        boxShadow: `0 16px 32px ${action.color}25`,
+                        border: `2px solid ${action.color}40`,
                       },
-                      display: "flex",
-                      flexDirection: "column",
-                      justifyContent: "flex-start",
-                      alignItems: "center",
                     }}
+                    onClick={() => handleNavigation(action.path)}
                   >
                     <Box
                       sx={{
-                        p: 1.75,
-                        borderRadius: 2,
-                        backgroundColor: `${action.color}12`,
+                        p: 2.5,
+                        borderRadius: 3,
+                        backgroundColor: `${action.color}15`,
                         color: action.color,
-                        mb: 1.5,
-                        display: "inline-flex",
+                        mb: 2,
+                        mx: "auto",
+                        width: "fit-content",
+                        display: "flex",
                         alignItems: "center",
                         justifyContent: "center",
                       }}
                     >
-                      {React.cloneElement(action.icon, { sx: { fontSize: 34 } })}
+                      {React.cloneElement(action.icon, {
+                        sx: { fontSize: 36 },
+                      })}
                     </Box>
-
-                    <Typography variant="h6" fontWeight="700" sx={{ mb: 1 }}>
+                    <Typography
+                      variant="h6"
+                      fontWeight="bold"
+                      sx={{
+                        mb: 1,
+                        color: "text.primary",
+                      }}
+                    >
                       {action.title}
                     </Typography>
-
-                    <Typography variant="body2" color="text.secondary" sx={{ textAlign: "center" }}>
+                    <Typography
+                      variant="body2"
+                      color="textSecondary"
+                      sx={{
+                        fontWeight: 500,
+                        lineHeight: 1.5,
+                      }}
+                    >
                       {action.description}
                     </Typography>
                   </Card>

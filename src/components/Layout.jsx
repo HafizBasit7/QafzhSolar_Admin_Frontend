@@ -31,9 +31,11 @@ import {
   Calculate as CalculateIcon,
   Assignment as AssignmentIcon,
   AccountCircle as AccountCircleIcon,
+  AccountBalance 
 } from "@mui/icons-material";
 import LanguageToggle from "./LanguageToggle";
 import { useLogout } from "../hooks/useAuth";
+import logo from "../assets/mylogo.png";
 
 const drawerWidth = 280;
 
@@ -60,6 +62,11 @@ const menuItems = [
     icon: <CalculateIcon />,
     path: "/calculator-settings",
   },
+  {
+    text: "navigation.bankDetails",
+    icon: <AccountBalance />,
+    path: "/bank-details",
+  }
 ];
 
 const Layout = ({ children }) => {
@@ -105,26 +112,36 @@ const Layout = ({ children }) => {
       >
         <Box
           component="img"
-          src="/logo.png"
+          // src="/logo.png"
+          src = {logo}
           alt="Qahzah Logo"
           sx={{
-            width: 100,
-            height: 100,
+            width: { xs: 80, md: 100 }, // Responsive sizing
+            height: 'auto', // Maintain aspect ratio
             mx: "auto",
             mb: 2,
+            borderRadius: 8,
             objectFit: "contain",
+            transition: 'all 0.3s ease', // Smooth hover effects
+            '&:hover': {
+              transform: 'scale(1.05)', // Subtle hover animation
+              opacity: 0.9
+            }
           }}
           onError={(e) => {
-            console.log("Logo failed to load, using fallback");
-            e.target.style.display = "none";
+            console.error("Logo failed to load");
+    e.target.src = '/logo-fallback.png'; // Fallback image path
+    e.target.style.display = "block"; // Ensure fallback is visible
+    e.target.style.width = '100px'; // Maintain consistent sizing
+    e.target.style.height = 'auto';
           }}
         />
         <Typography variant="h5" fontWeight="bold" gutterBottom>
           {t("dashboard.title")}
         </Typography>
-        <Typography variant="body1" sx={{ opacity: 0.9 }}>
+        {/* <Typography variant="body1" sx={{ opacity: 0.9 }}>
           {t("common.adminPanel")}
-        </Typography>
+        </Typography> */}
       </Box>
       <Divider />
       <List sx={{ flexGrow: 1, pt: 2 }}>

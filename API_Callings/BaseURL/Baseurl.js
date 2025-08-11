@@ -1,5 +1,5 @@
 // Base URL Configuration
-const baseurl = "http://192.168.1.5:5005";
+const baseurl = "http://192.168.100.30:5055";
 
 // const baseurl = "https://srv694651.hstgr.cloud/solaradmin/";
 

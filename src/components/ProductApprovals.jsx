@@ -195,12 +195,28 @@ const ProductApprovals = () => {
 
   return (
     <Container maxWidth="xl" sx={{ py: 4 }}>
+        <Card
+        elevation={0}
+        sx={{
+          background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+          color: "white",
+          mb: 4,
+          borderRadius: 3,
+        }}
+      >
+        <CardContent sx={{ py: 4 }}>
+
       <Typography variant="h4" fontWeight="bold" gutterBottom>
         {t("products.title")}
       </Typography>
-      <Typography variant="body1" color="textSecondary" sx={{ mb: 4 }}>
+       <Typography
+                variant="h6"
+                sx={{ opacity: 0.9, fontWeight: 300, maxWidth: 600 }}
+              >
         {t("products.subtitle")}
       </Typography>
+      </CardContent>
+      </Card>
 
       {/* No Products Message */}
       {pendingProducts.length === 0 && (
@@ -537,14 +553,14 @@ const ProductApprovals = () => {
                   <strong>{t("products.condition")}:</strong>{" "}
                   {selectedProduct.condition}
                 </Typography>
-                <Typography variant="body2" color="textSecondary" gutterBottom>
+                {/* <Typography variant="body2" color="textSecondary" gutterBottom>
                   <strong>{t("products.brand")}:</strong>{" "}
                   {selectedProduct.brand || "N/A"}
                 </Typography>
                 <Typography variant="body2" color="textSecondary" gutterBottom>
                   <strong>{t("products.model")}:</strong>{" "}
                   {selectedProduct.model || "N/A"}
-                </Typography>
+                </Typography> */}
                 <Typography variant="body2" color="textSecondary" gutterBottom>
                   <strong>{t("products.location")}:</strong>{" "}
                   {selectedProduct.governorate}, {selectedProduct.city}

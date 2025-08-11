@@ -2,7 +2,7 @@
   "dashboard": {
     "title": "لوحة تحكم قهزة",
     "welcome": "مرحباً بك في لوحة تحكم قهزة",
-    "subtitle": "مرحباً بك في لوحة إدارة نظام قهزة للطاقة الشمسية",
+    "subtitle": "قم بإدارة نظامك بالكامل من هنا!",
     "recentActivity": "النشاط الأخير",
     "quickActions": "إجراءات سريعة",
     "stats": {
@@ -39,7 +39,8 @@
     "manageShops": "إدارة المتاجر",
     "manageAds": "إدارة الإعلانات",
     "calculatorSettings": "إعدادات الحاسبة",
-    "viewSubmissions": "عرض التقديمات"
+    "viewSubmissions": "عرض التقديمات",
+    "bankDetails":"تفاصيل البنك"
   },
   "engineers": {
     "title": "إدارة المهندسين",

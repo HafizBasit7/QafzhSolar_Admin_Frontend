@@ -308,22 +308,78 @@ const CalculatorSettings = () => {
   return (
     <Container maxWidth="xl" sx={{ py: 4 }}>
       {/* Appliance Settings Section */}
-      <Box sx={{ mb: 4 }}>
-        <Typography variant="h5" fontWeight="bold" gutterBottom>
+      <Card
+        elevation={0}
+        sx={{
+          background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+          color: "white",
+          mb: 4,
+          borderRadius: 3,
+        }}
+      >
+        <CardContent sx={{ py: 4 }}>
+        <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              flexWrap: "wrap",
+              gap: 2,
+            }}
+          >
+      <Typography variant="h3"
+                fontWeight="700"
+                gutterBottom
+                sx={{
+                  background: "linear-gradient(45deg, #fff 30%, #e3f2fd 90%)",
+                  backgroundClip: "text",
+                  WebkitBackgroundClip: "text",
+                  WebkitTextFillColor: "transparent",
+                }}
+              >
           {t("calculator.applianceSettings") || "Appliance Settings"}
         </Typography>
-        <Typography variant="body2" color="textSecondary" sx={{ mb: 2 }}>
+        <Typography
+                variant="h6"
+                sx={{ opacity: 0.9, fontWeight: 300, maxWidth: 600 }}
+              >
           {t("calculator.applianceSettingsDesc") ||
             "Manage the appliances and their default wattages for the user calculator."}
         </Typography>
         <Button
-          variant="contained"
-          startIcon={<AddIcon />}
+         variant="contained"
+         size="large"
+         startIcon={!isRTL ? <AddIcon /> : null}
           onClick={() => setOpenApplianceDialog(true)}
-          sx={{ mb: 2 }}
+          sx={{
+            background: "rgba(255, 255, 255, 0.2)",
+            backdropFilter: "blur(10px)",
+            color: "white",
+            border: "1px solid rgba(255, 255, 255, 0.3)",
+            borderRadius: 2,
+            px: 3,
+            py: 1.5,
+            fontSize: "1.1rem",
+            fontWeight: 600,
+            "&:hover": {
+              background: "rgba(255, 255, 255, 0.3)",
+              transform: "translateY(-2px)",
+              boxShadow: "0 8px 25px rgba(0,0,0,0.15)",
+            },
+            transition: "all 0.3s ease",
+          }}
         >
+       
           {t("calculator.addAppliance") || "Add Appliance"}
         </Button>
+        </Box>
+        </CardContent>
+        </Card>
+      
+      <Box sx={{ mb: 4 }}>
+   
+
+
         <TableContainer component={Paper} variant="outlined">
           <Table size="small">
             <TableHead>
